@@ -22,14 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class FileDownloadUtility {
 
+
+	private static final String $charset = "UTF-8";
+	
 	/** Buffer Size for download stream */
 	private static final int $bufferSize = 1024 * 8; 
 
-	private static final String $charset = "UTF-8";
-
-	private FileDownloadUtility() {
-		// do nothing;
-	}
 
 	public static void download(HttpServletRequest request, HttpServletResponse response, File file, boolean resumable)
 			throws ServletException, IOException {
@@ -236,5 +234,8 @@ public class FileDownloadUtility {
 
 			}
 		}
+	}
+	
+	private FileDownloadUtility() {
 	}
 }
