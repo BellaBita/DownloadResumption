@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charshet="utf-8" />
-<title>Http 1.1 Resume Download Test</title>
+<title>Http 1.1 Download Resumption Test</title>
 <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>

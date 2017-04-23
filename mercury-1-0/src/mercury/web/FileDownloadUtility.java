@@ -9,8 +9,11 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -143,8 +146,18 @@ public class FileDownloadUtility {
 		// [Req-Header] accept-encoding:gzip, deflate, sdch, br
 		// [Req-Header] accept-language:ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4
 		// [Req-Header] cookie:JSESSIONID=357B5316A2B7733555814A0FF17BE794
-
+		
+		// IE 11
+		// [Req-Header] accept:*/*
+		// [Req-Header] accept-encoding:gzip, deflate
+		// [Req-Header] user-agent:Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+		// [Req-Header] host:127.0.0.1:8080
+		// [Req-Header] range:bytes=6577531-
+		// [Req-Header] if-range:Sat, 22 Apr 2017 09:19:21 GMT
+		// [Req-Header] dnt:1
+		// [Req-Header] connection:Keep-Alive
 		if (resumable) {
+			
 			
 			//Fire Fox
 			String reqFileDate = request.getHeader("if-unmodified-since");
@@ -153,7 +166,9 @@ public class FileDownloadUtility {
 				reqFileDate = request.getHeader("if-range");
 			}
 			
+			// The timezone of date must be 'GMT'
 			DateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+			df.setCalendar(Calendar.getInstance(TimeZone.getTimeZone("GMT")));
 			String fileLastModified = df.format(file.lastModified());
 
 			response.setHeader("Date", df.format(System.currentTimeMillis()));
